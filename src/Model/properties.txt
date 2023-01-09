@@ -1,0 +1,4 @@
+Fridge_Name: Fridge-G1
+Com_Port: COM7
+Fridge_Constructor: China-TX Cooler
+Fridge_Model: Fdg_V023
