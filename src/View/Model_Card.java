@@ -46,6 +46,7 @@ public class Model_Card {
     public Model_Card() {
     }
 
+
     private Icon icon;
     private String title;
     private String values;

@@ -51,6 +51,10 @@ public class Card extends JPanel {
         lbValues.setText(data.getValues());
         lbDescription.setText(data.getDescription());
     }
+    public void updateValues(Model_Card data) {
+        lbValues.setText(data.getValues());
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
