@@ -90,24 +90,7 @@ public class Controller implements IController {
 
     @Override
     public void update(Object o) {
-//        input = new BufferedReader(new InputStreamReader(serialManager.serialPort.getInputStream()));
-//        try {
-//            String data = (String) o;
-//            JSONObject sensor = new JSONObject((String) o);
-//            setTemp(sensor.getDouble("temp"));
-//            setHumidity(sensor.getDouble("hum"));
-//            setRose(sensor.getDouble("rose"));
-//            setInside(sensor.getDouble("inside"));
-//            setFroze(sensor.getInt("froze") == 1);
-//            setDoor(sensor.getInt("door") == 1);
-//
-//            if(model.getOrder() != sensor.getDouble("order") && !bootValue) {
-//                model.setOrder(sensor.getDouble("order"));
-//                bootValue = true;
-//            }
-//        } catch (Exception e) {
-//            System.err.println(e.toString());
-//        }
+
         try {
             if (!(input.readLine() != null)) ;
         } catch (IOException ex) {
@@ -118,25 +101,16 @@ public class Controller implements IController {
             System.out.print("temp is: " + sensor.getDouble("temp"));
             System.out.print("  " + "humidity: " + sensor.getDouble("hum"));
             System.out.print("  " + "rose: " + sensor.getDouble("rose"));
-            System.out.println("  " + "froze: " + sensor.getBoolean("froze"));
+            System.out.print("  " + "froze: " + sensor.getBoolean("froze"));
+            System.out.print("  " + "order is : " + sensor.getDouble("order"));
+            System.out.println("  " + "door: " + (sensor.getInt("door") == 1));
             System.out.println();
+            System. out.println(" model order "+ this.model.getOrder());
             setTemp(sensor.getDouble("temp"));
             setHumidity(sensor.getDouble("hum"));
             setRose(sensor.getDouble("rose"));
-
-//                System.out.print("temp is: " + sensor.getDouble("temp"));
-//                System.out.print("  " + "humidity: " + sensor.getDouble("hum"));
-//                System.out.print("  " + "rosee: " + sensor.getDouble("rosee"));
-//                System.out.println("  " + "frooze: " + sensor.getBoolean("frooze"));
-            //System.out.println(input.readLine());
-//            String data = input.readLine();
-//            if (data.charAt(0) == '{') {
-//                JSONObject sensor = new JSONObject(input.readLine());
-//                System.out.print("temp is: " + sensor.getDouble("temp"));
-//                System.out.print("  " + "humidity: " + sensor.getDouble("hum"));
-//                System.out.print("  " + "rosee: " + sensor.getDouble("rosee"));
-//                System.out.println("  " + "frooze: " + sensor.getBoolean("frooze"));
-//            }
+            setDoor(sensor.getInt("door") == 1);
+            this.sendData("order",Double.toString(this.model.getOrder()));
 
         } catch (JSONException ex) {
             throw new RuntimeException(ex);
@@ -168,7 +142,7 @@ public class Controller implements IController {
                     //System.out.println(input.readLine());
                     String data = (input.readLine() != null) ? input.readLine() : "";
                     if (data.charAt(0) == '{') {
-                        this.update(input.readLine());
+                        this.update(data);
 
                     }
                 } catch (IOException ex) {

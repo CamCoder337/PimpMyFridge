@@ -7,10 +7,7 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 
 public class SerialManager implements SerialPortDataListener {
 
@@ -88,7 +85,10 @@ public class SerialManager implements SerialPortDataListener {
         json.put("type", type);
         json.put("value", value);
         try {
-            output.write(json.toString().getBytes());
+            OutputStream outputStream = serialPort.getOutputStream();
+            DataOutputStream data_output = new DataOutputStream(outputStream);
+            //output.write(json.toString().getBytes());
+            data_output.write(json.toString().getBytes("UTF-8"));
         } catch (Exception e) {
 
         }

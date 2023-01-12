@@ -18,6 +18,7 @@ public class Model extends Observable implements IModel {
     private boolean doorOpen;
     public Model(){
         this.temp = 0;
+        this.order = 18;
     }
 
     @Override

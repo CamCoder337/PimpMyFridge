@@ -38,12 +38,12 @@ public class AppPanel extends JPanel implements Observer , Runnable{
     private JSliderUI temp_slider;
     private JsliderCustom slider;
     private TextField yr_temp;
-    private int order = 18;
+    private double order = 18;
     private int minVal = 15;
     private int maxVal = 25;
 
     private SwitchButton switchButton;
-    private final JLabel door_warn = new JLabel("OPEN DOOR");
+    private final JLabel door_warn = new JLabel("OPEN DOOR  !    !   !");
     private JLabel warn_img;
 
     private final Button remButton = new Button("-",Color.darkGray,Color.white, 600, 165, 50,50);
@@ -108,7 +108,7 @@ public class AppPanel extends JPanel implements Observer , Runnable{
         this.yr_temp.setLabelText("Temperature");
         this.yr_temp.setDisabledTextColor(Color.BLACK);
         this.yr_temp.setEditable(false);
-        this.yr_temp.setText(Integer.toString(order));
+        this.yr_temp.setText(Double.toString(order));
         this.add(yr_temp);
 
         //Setting bounds to Cards and SwitchButton and adding them to the panel
@@ -130,25 +130,32 @@ public class AppPanel extends JPanel implements Observer , Runnable{
         //this.slider.setLocation(755,25);
 
 
-        //this.add(door_warn);
-        this.door_warn.setBounds(85,200,400,200);
+        this.add(door_warn);
+        this.door_warn.setBounds(120,175,150,150);
         try{
-            this.warn_img= new JLabel(new ImageIcon(ImageIO.read(new File("src/Assets/images/wrn.png"))));
-            //this.add(warn_img);
-            this.warn_img.setBounds(130,200,20,15);
+            this.warn_img= new JLabel(new ImageIcon(ImageIO.read(new File("src/Assets/images/danger.png"))));
+            this.add(warn_img);
+            this.warn_img.setBounds(80,60,150,150);
+
 
         }
         catch(IOException e){
             e.printStackTrace();
         }
-        this.setDoor_warn(true);
+        this.setDoor_warn(false);
     }
 
     public void setDoor_warn(boolean isOpen){
-        if(isOpen){
+        if(!isOpen){
             this.door_warn.setForeground(Color.red);
+            this.warn_img.setVisible(!isOpen);
+            this.warn_img.repaint();
+//            this.add(warn_img);
         }else {
             this.door_warn.setForeground(Color.darkGray);
+            this.warn_img.setVisible(isOpen);
+            this.warn_img.repaint();
+            //this.remove(warn_img);
         }
     }
 
@@ -220,6 +227,9 @@ public class AppPanel extends JPanel implements Observer , Runnable{
                 temperature_out.setValues(Double.toString(this.controller.getModel().getTemp()));
                 tp_out_card.setData(temperature_out);
                 break;
+            case "order":
+                this.yr_temp.setText(Double.toString(this.controller.getModel().getOrder()));
+                break;
 
             default:
                 break;
@@ -244,8 +254,8 @@ public class AppPanel extends JPanel implements Observer , Runnable{
         }else{
             this.order = (order-1 >= minVal) ? order-1 : order;
         }
-
-        this.yr_temp.setText(Integer.toString(order));
+        //this.yr_temp.setText(Integer.toString(order));
+        this.controller.setOrder(order);
     }
 
     @Override
@@ -265,8 +275,10 @@ public class AppPanel extends JPanel implements Observer , Runnable{
                 repaint();
                 delta--;
                 drawCount++;
+
                 if(controller.getModel().isSerial()){
                     controller.ReceiveData();
+
                 }
             }
             if(timer >= FPSS){
