@@ -134,7 +134,7 @@ public class AppPanel extends JPanel implements Observer , Runnable{
         this.door_warn.setBounds(120,175,150,150);
         try{
             this.warn_img= new JLabel(new ImageIcon(ImageIO.read(new File("src/Assets/images/danger.png"))));
-            this.add(warn_img);
+            //this.add(warn_img);
             this.warn_img.setBounds(80,60,150,150);
 
 
@@ -142,7 +142,7 @@ public class AppPanel extends JPanel implements Observer , Runnable{
         catch(IOException e){
             e.printStackTrace();
         }
-        this.setDoor_warn(false);
+        this.setDoor_warn(true);
     }
 
     public void setDoor_warn(boolean isOpen){

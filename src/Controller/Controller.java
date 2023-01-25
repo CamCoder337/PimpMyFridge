@@ -98,19 +98,20 @@ public class Controller implements IController {
         }
         try {
             JSONObject sensor = new JSONObject((String) o);
-            System.out.print("temp is: " + sensor.getDouble("temp"));
+            System.out.print("temp out: " + sensor.getDouble("temp"));
+            System.out.print("temp in: " + sensor.getDouble("inside"));
             System.out.print("  " + "humidity: " + sensor.getDouble("hum"));
             System.out.print("  " + "rose: " + sensor.getDouble("rose"));
-            System.out.print("  " + "froze: " + sensor.getBoolean("froze"));
             System.out.print("  " + "order is : " + sensor.getDouble("order"));
             System.out.println("  " + "door: " + (sensor.getInt("door") == 1));
             System.out.println();
-            System. out.println(" model order "+ this.model.getOrder());
             setTemp(sensor.getDouble("temp"));
+            setInside(sensor.getDouble("inside"));
             setHumidity(sensor.getDouble("hum"));
             setRose(sensor.getDouble("rose"));
             setDoor(sensor.getInt("door") == 1);
             this.sendData("order",Double.toString(this.model.getOrder()));
+            //this.model.recordData();
 
         } catch (JSONException ex) {
             throw new RuntimeException(ex);

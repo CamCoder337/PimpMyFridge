@@ -16,9 +16,11 @@ public class Model extends Observable implements IModel {
     private boolean powerOn;
     private boolean froze;
     private boolean doorOpen;
+    private DAO dao;
     public Model(){
         this.temp = 0;
         this.order = 18;
+        this.dao = new DAO();
     }
 
     @Override
@@ -130,5 +132,17 @@ public class Model extends Observable implements IModel {
         this.serial = serial;
         setChanged();
         notifyObservers("serial");
+    }
+
+    @Override
+    public void recordData() {
+        try{
+            this.dao.open();
+            String sql = "insert into pmfdb.pmf ('inside','temp','humidity','rose') values ('"+ this.getInside()+"', '"+ this.getTemp()+"', '"+this.getHumidity()+"', '"+this.getRose()+"');";
+            this.dao.executeUpdate(sql);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

@@ -38,4 +38,6 @@ public interface IModel {
     public void setSerial(boolean serial);
     public void addObserver(Observer o);
 
+    public void recordData();
+
 }

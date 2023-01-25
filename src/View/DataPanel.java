@@ -53,8 +53,8 @@ public class DataPanel extends JPanel implements Observer {
         this.curveLineChart.addLegend("Rose", Color.decode("#e65c00"), Color.decode("#F9D423"));
         this.curveLineChart.setFillColor(true);
         curveLineChart.start();
-        this.dao = new DAO();
-        this.setData();
+//        this.dao = new DAO();
+//        this.setData();
         //this.curveLineChart.repa
     }
 
@@ -64,7 +64,7 @@ public class DataPanel extends JPanel implements Observer {
         try{
             this.dao.open();
             ArrayList<ModelData> lists = new ArrayList<>();
-            String sql = "select DATE_FORMAT(time, '%H:%m:%s') as 'Days', inside as Inside, temp as Temp, humidity as Humidity, rose as Rose from pmf group by DATE_FORMAT(time, '%h:%m:%s') order by time";
+            String sql = "select inside as Inside, temp as Temp, humidity as Humidity, rose as Rose from pmf";
             PreparedStatement p = this.dao.getConnection().prepareStatement(sql);
             ResultSet r = p.executeQuery();
             while (r.next()){
@@ -118,6 +118,15 @@ public class DataPanel extends JPanel implements Observer {
 //            counter = 0;
 //        }
        //this.curveLineChart.repaint();
+
+        if(counter <= 10){
+            this.curveLineChart.addData(new ModelChart("", new double[]{this.controller.getModel().getInside(),this.controller.getModel().getTemp(),this.controller.getModel().getHumidity(),this.controller.getModel().getRose()}));
+            counter ++;
+        }else {
+            this.curveLineChart.start();
+            counter = 0;
+        }
+
 
     }
 

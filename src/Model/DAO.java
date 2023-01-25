@@ -52,7 +52,7 @@ public class DAO {
         return statement;
     }
 
-    private int executeUpdate(String Query) {
+    public int executeUpdate(String Query) {
         try {
             this.statement.executeUpdate(Query);
         } catch (SQLException e) {
